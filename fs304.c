@@ -17,9 +17,6 @@ int main(){
 
 	mountFS304();
 
-	readFS304(3, buffer);
-	printf("3: %s\n",buffer);
-
 	strcpy(command, parameters[0]);
 
 	while(strcmp(command,"exit") != 0){
