@@ -1,3 +1,12 @@
+/*******************************************************************/
+/* COMP 304 Project 3 : OS File System 304 (FS304)
+/* Spring 2017
+/* Koc University
+/* Author: Zafer Cavdar, 499995 (KU-ID)
+/* Date: 23rd of May, 2017
+/*
+/*******************************************************************/
+
 #include "fs304.h"
 #include <stdio.h>
 #include <stdlib.h>
