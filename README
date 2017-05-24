@@ -1,0 +1,22 @@
+/*******************************************************************/
+/* COMP 304 Project 3 : OS File System 304 (FS304)
+/* Spring 2017
+/* Koc University
+/* Author: Zafer Cavdar, 49995 (KU-ID)
+/* Date: 23rd of May, 2017
+/*
+/*******************************************************************/
+
+In this project, I implemented 4 C functions.
+
+1) int main(): mounts the disk, reads input from console and check if it matchs with implemented functions like compare, rename, copy or pre-implemented one rd, ls, cd, md, stats. Exit command breaks the loop and program finishes.
+
+2) void p_compare(char *filename1, char *filename2): checks if filename1 named file and filename2 named file exist in the current directory. If both of the files exist, reads the data of their contents from disk and compares each char in the buffer. Difference is the count of how many characters are different in these files. This function whose details are explained in the project description (Question 1) is successfully implemented.
+
+3)void p_rename(char *oldname, char *newname): checks if the file named oldname exists in the current directory by iterating over all files and directories in the CD. Once it finds the file, directory entry of the file is updated with newname and updated directory entry is written back to disk. This function whose details are explained in the project description (Question 2) is successfully implemented.
+
+4)void p_copy(char *file1, char *file2): this function first iterates over all files and directories in the current directory and checks if file1 exists and possible empty block and entry to create new file. If file1 does not exist or no free block or no free entry is found, it gives errors. Else, it gets new inode entry. valid bit 1, new file name and location of the inode entry is written to directory entry. Then, for the file, FI is written to first 2 bits of inode entry. Then, number of copied file's block number times new blocks are requested and new block numbers are written to inode entry. file1's block contents are read and written into new blocks. All changes in inode table is written back to disk and copy process is finished. This function whose details are explained in the project description (Question 3) is successfully implemented.
+
+This program also calls ls, md, rd, stats and cd commands if user types them with proper arguments.
+
+

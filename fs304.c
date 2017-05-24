@@ -13,6 +13,8 @@
 #include <string.h>
 #include <math.h>
 
+// signatures of implemented functions
+
 void p_compare(char *, char *);
 void p_rename(char *, char *);
 void p_copy(char *, char *);
@@ -28,7 +30,7 @@ int main(){
 
 	strcpy(command, parameters[0]);
 
-	while(strcmp(command,"exit") != 0){
+	while(strcmp(command,"exit") != 0){ // if command is exit, then break the loop
 		paramc = 0;
 		for (int i = 0; i < 5; i++){
 			strcpy(parameters[i], "");
@@ -37,6 +39,7 @@ int main(){
 		printf("admin@OS:");
 		printPrompt();
 
+		// tokenize all inputs
 		do{
 	    if (scanf("%s", parameters[paramc]) == 1){
 					paramc += 1;
@@ -45,6 +48,7 @@ int main(){
 		while (getchar() != '\n');
 		strcpy(command, parameters[0]);
 
+		// check which command is entered
 		if (strcmp(command, "rename") == 0){
 			p_rename(parameters[1], parameters[2]);
 		} else if (strcmp(command,"compare") == 0){
@@ -103,7 +107,7 @@ void p_compare(char *filename1, char *filename2){
 			if (_inode_table[e_inode].TT[0]=='F')  { // entry is for a file
 				if (strcmp(_directory_entries[j].fname, filename1) == 0){ // found file1
 						foundF1 = 1;
-						f1blocks[0] = stoi(_inode_table[e_inode].XX,2);
+						f1blocks[0] = stoi(_inode_table[e_inode].XX,2); // store blocks which contains the data
 						f1blocks[1] = stoi(_inode_table[e_inode].YY,2);
 						f1blocks[2] = stoi(_inode_table[e_inode].ZZ,2);
 				} else if (strcmp(_directory_entries[j].fname, filename2) == 0){ // found file2
@@ -129,7 +133,7 @@ void p_compare(char *filename1, char *filename2){
 					}
 				}
 			} else {
-				difference += 1024;
+				difference += 1024; // if one of the file's does not have a data block, then increase difference by 1024
 			}
 		}
 		printf("Number of differences between %s and %s: %d\n", filename1, filename2, difference);
