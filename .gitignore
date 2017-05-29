@@ -54,4 +54,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+#zip files
+*.zip
+*.rar
+
 # End of https://www.gitignore.io/api/c
