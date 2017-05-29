@@ -110,7 +110,7 @@ void p_compare(char *filename1, char *filename2){
 						f1blocks[0] = stoi(_inode_table[e_inode].XX,2); // store blocks which contains the data
 						f1blocks[1] = stoi(_inode_table[e_inode].YY,2);
 						f1blocks[2] = stoi(_inode_table[e_inode].ZZ,2);
-				} else if (strcmp(_directory_entries[j].fname, filename2) == 0){ // found file2
+				} if (strcmp(_directory_entries[j].fname, filename2) == 0){ // found file2
 						foundF2 = 1;
 						f2blocks[0] = stoi(_inode_table[e_inode].XX,2);
 						f2blocks[1] = stoi(_inode_table[e_inode].YY,2);
@@ -132,7 +132,7 @@ void p_compare(char *filename1, char *filename2){
 						difference += 1;
 					}
 				}
-			} else {
+			} else if (f1blocks[d] != 0 || f2blocks[d] != 0){
 				difference += 1024; // if one of the file's does not have a data block, then increase difference by 1024
 			}
 		}
@@ -147,6 +147,8 @@ void p_rename(char *oldname, char *newname){
 	int e_inode;
 	char fname[252];
 	int file_found = 0;
+	int error = 0;
+	int savei, savej;
 
 	blocks[0] = stoi(_inode_table[CD_INODE_ENTRY].XX,2);
 	blocks[1] = stoi(_inode_table[CD_INODE_ENTRY].YY,2);
@@ -166,17 +168,26 @@ void p_rename(char *oldname, char *newname){
 
 			if (strcmp(fname,oldname) == 0){
 				file_found = 1;
-				strcpy(_directory_entries[j].fname, newname);
-				writeFS304(blocks[i], (char *) _directory_entries);
+				savei = i;
+				savej = j;
+				//break;
+			}
+			if (strcmp(fname,newname) == 0){
+				error = 1;
 				break;
 			}
 
 		}
-		if (file_found) break;
+		if (error) break;
 	}
 
 	if (!file_found){
-		printf("%s could not be found in this directory. Rename failed!\n", oldname);
+		printf("Error: %s could not be found in this directory. Rename failed!\n", oldname);
+	} else if (error){
+		printf("Error: You cannot use %s for new name. File having this name already exist in the directory.\n",newname);
+	} else {
+		strcpy(_directory_entries[savej].fname, newname);
+		writeFS304(blocks[savei], (char *) _directory_entries);
 	}
 
 }
